@@ -1,5 +1,7 @@
 import requests
+import validators
 from flask import Flask, render_template, url_for, request, redirect
+
 
 
 NEWS_API = '981e13fbf86d4c73aecc0a4308f82641'
@@ -24,7 +26,7 @@ def home():
 
 
     for i in range(len(data) - 1):
-        if data[i]['title'] != None and data[i]['description'] != None and data[i]['url'] != None and data[i]['urlToImage'] != None and data[i]['publishedAt'] != None:
+        if data[i]['title'] != None and data[i]['description'] != None and data[i]['url'] != None and data[i]['urlToImage'] != None and validators.url(data[i]['urlToImage']) == True and data[i]['publishedAt'] != None:
             title = data[i]['title']
             content = data[i]['description']
             url = data[i]['url']
