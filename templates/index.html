@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech News Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/assets/styles.css"/>
+
+  </head>
+<body>
+  
+    
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Tech News</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{url_for('home')}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{{news_list[0]['url']}}" tabindex="-1" aria-disabled="true">Top Headline</a>
+            </li>
+          </ul>
+          <form class="d-flex" action="{{ url_for('get_search')}}" method="post">
+            <input class="form-control me-2"  name='Search' id="Search"  type="search"  placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+    <main>
+    
+      <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class="active" aria-current="true"></button>
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item">
+            <!-- <svg class="bd-placeholder-img " width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect><image src="images1.jpg" class="bd-placeholder-img img-fluid mx-auto" /></svg>   -->
+            <img src="{{ news_list[0]['image_url']}}" class="bd-placeholder-img img-fluid mx-auto" alt="Responsive image" preserveAspectRatio="xMidYMid slice" focusable="false">
+            
+            <div class="container">
+              <div class="carousel-caption text-start">
+                <h1>{{ news_list[0]['title']}}</h1>
+                <p>{{news_list[0]['content']}}</p>
+                <p><a class="btn btn-lg btn-primary" href="{{news_list[0]['url']}}">Learn more</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item active">
+            <!-- <svg class="bd-placeholder-img " width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg> -->
+            <img src="{{ news_list[3]['image_url']}}" class="bd-placeholder-img img-fluid mx-auto" alt="Responsive image" preserveAspectRatio="xMidYMid slice" focusable="false">
+
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>{{ news_list[3]['title']}}</h1>
+                <p>{{news_list[3]['content']}}</p>
+                <p><a class="btn btn-lg btn-primary" href="{{news_list[3]['url']}}">Learn more</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <!-- <svg class="bd-placeholder-img " width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg> -->
+            <img src="{{ news_list[4]['image_url']}}" class="bd-placeholder-img img-fluid mx-auto" alt="Responsive image" preserveAspectRatio="xMidYMid slice" focusable="false">
+
+            <div class="container">
+              <div class="carousel-caption text-end">
+                <h1>{{news_list[4]['title']}}</h1>
+                <p>{{news_list[4]['content']}}</p>
+                <p><a class="btn btn-lg btn-primary" href="{{news_list[4]['url']}}">Learn more</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    
+    
+      <!-- Marketing messaging and featurettes
+      ================================================== -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
+    
+      <div class="container marketing">
+    
+        <!-- Three columns of text below the carousel -->
+        <div class="row" >
+          <div class="col-lg-4">
+            <img src="{{news_list[5]['image_url']}}" class="bd-placeholder-img rounded-circle" width="140" height="140"  role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+    
+            <h2>{{news_list[5]['title']}}</h2>
+            <p>{{news_list[5]['content']}}</p>
+            <p><a class="btn btn-secondary" href="{{news_list[5]['url']}}">View details »</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img src="{{news_list[6]['image_url']}}" class="bd-placeholder-img rounded-circle" width="140" height="140" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+    
+            <h2>{{news_list[6]['title']}}</h2>
+            <p>{{ news_list[6]['content']}}</p>
+            <p><a class="btn btn-secondary" href="news_list[6]['url']">View details »</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img src="{{ news_list[7]['image_url']}}" class="bd-placeholder-img rounded-circle" width="140" height="140" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+    
+            <h2>{{ news_list[7]['title']}}</h2>
+            <p>{{ news_list[7]['content']}} No tech journalist has built a bigger brand for herself. Her three-decade career is a study in hard work and uncommon confidence.</p>
+            <p><a class="btn btn-secondary" href="{{ news_list[7]['url']}}">View details »</a></p>
+          </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+    
+    
+        <!-- START THE FEATURETTES -->
+    
+        <hr class="featurette-divider">
+    
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading"> {{news_list[8]['title'] }}It’ll blow your mind.</span></h2>
+            <p class="lead"> {{news_list[8]['content']}}</p>
+          </div>
+          <div class="col-md-5">
+            <img src="{{ news_list[8]['image_url']}}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+    
+          </div>
+        </div>
+    
+        <hr class="featurette-divider">
+    
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading">{{news_list[9]['title'] }}<span class="text-muted">See for yourself.</span></h2>
+            <p class="lead">{{ news_list[9]['content']}}  </p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <img src="{{ news_list[9]['image_url']}}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+          </div>
+        </div>
+    
+        <hr class="featurette-divider">
+    
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">{{ news_list[10]['title']}}<span class="text-muted">Checkmate.</span></h2>
+            <p class="lead">  {{ news_list[10]['content']}}</p>
+          </div>
+          <div class="col-md-5">
+            <img src="{{ news_list[10]['image_url']}}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" role="img"  preserveAspectRatio="xMidYMid slice" focusable="false">
+    
+          </div>
+        </div>
+    
+        <!-- /END THE FEATURETTES -->
+    
+      </div><!-- /.container -->
+
+      <!-- Album content -->
+      <div class="album py-5">
+        <div class="container">
+    
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+              <div class="card shadow-sm">
+                <img src="{{news_list[11]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+    
+                <div class="card-body">
+                  <p class="card-text">{{news_list[11]['title']}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{ news_list[11]['url']}}" class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{news_list[11]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+<!--                 class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></>-->
+                   <img src="{{news_list[12]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="card-body">
+                  <p class="card-text">{{ news_list[12]['title']}}                </p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{ news_list[12]['url']}}" class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{news_list[12]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+<!--                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                    <img src="{{news_list[13]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="card-body">
+                  <p class="card-text">{{news_list[13]['title']}} Only six UK companies became a unicorn</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{news_list[13]['url']}}" class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{news_list[13]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="col">
+              <div class="card shadow-sm">
+<!--                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                <img src="{{news_list[14]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="card-body">
+                  <p class="card-text">{{ news_list[14]['title']}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{news_list[14]['url']}}" class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{news_list[14]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+<!--                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                  <img src="{{news_list[15]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="card-body">
+                  <p class="card-text">{{ news_list[15]['title']}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{ news_list[15]['url']}}" class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{ news_list[15]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+<!--                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                <img src="{{news_list[16]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="card-body">
+                  <p class="card-text">{{news_list[16]['title']}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{ news_list[16]['url']}}" class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{ news_list[16]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="col">
+              <div class="card shadow-sm">
+<!--                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                  <img src="{{news_list[17]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="card-body">
+                  <p class="card-text">{{ news_list[17]['title']}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{ news_list[17]['url']}}" class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{news_list[17]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+<!--                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                   <img src="{{news_list[18]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="card-body">
+                  <p class="card-text">{{ news_list[18]['title']}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{news_list[18]['url']}}"  class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{ news_list[18]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+<!--                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                  <img src="{{news_list[19]['image_url']}}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <div class="card-body">
+                  <p class="card-text">{{ news_list[19]['title']}}. PayPal is laying off nine percent of its workforce</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{ news_list[19]['url']}}" class="btn btn-sm btn-outline-secondary">View</a>
+                    </div>
+                    <small class="text-muted">{{ news_list[19]['date']}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      <!-- FOOTER -->
+       
+      <div>
+        <hr class="featurette-divider">
+
+      </div>
+    
+    
+        <!-- FOOTER -->
+        <footer class="container">
+            <p class="float-end"><a href="{{url_for('home')}}">Back to top</a></p>
+            <p>© 2022–2027 Rocket, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+          </footer>
+      
+    </main>
+    
+    
+       
+          
+      
+    
+    
+      
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>
